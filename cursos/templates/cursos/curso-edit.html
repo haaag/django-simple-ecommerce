@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %} {% block content %}
+<div class="max-w-lg mx-auto flex flex-wrap p-6">
+  <div class="w-full bg-gray-100 p-6 rounded-xl">
+    <h1 class="mb-6 text-2xl">Editar Curso</h1>
+
+    <form method="POST" action="" class="space-y-3">
+      {% csrf_token %}
+
+      {{ form.as_p }}
+
+      <div>
+        <button type="" class="py-4 px-6 rounded-xl text-white bg-green-500 hover:bg-green-700">Actualizar</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+{% endblock %}
