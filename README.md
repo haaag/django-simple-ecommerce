@@ -1,4 +1,4 @@
-# CoderHouse Proyecto Final
+# Coderhouse Proyecto Final
 ## Comisión 31075
 
 Simple e-commerce realizado en [Django](https://www.djangoproject.com/) y [TailwindCss](https://tailwindcss.com/). Aproveché este proyecto para crear un template desde cero con la ayuda de `Tailwindcss`.
@@ -11,6 +11,14 @@ Simple e-commerce realizado en [Django](https://www.djangoproject.com/) y [Tailw
 - Agregar Cursos
 - Editar Cursos
 - Eliminar Cursos
+
+## Instalación Dependencias
+
+Una vez creado el virtual env, instalar dependencias.
+
+```bash
+$ pip install -r requirements.txt
+```
 
 ## TODO
 - [ ] Actualizar `carrito` con cursos agregados.
