@@ -1,0 +1,9 @@
+{% extends 'core/base.html' %} {% block content %}
+<div class="max-w-6xl mx-auto py-2 px-6 xl:px-0">
+  <div class="cursos flex items-center flex-wrap">
+    {% for curso in cursos %}
+      {% include 'cursos/partials/cursos_lista_completa.html' %}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

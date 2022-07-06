@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %} {% block content %}
+<div class="max-w-6xl mx-auto flex flex-wrap items-start py-6 px-6 xl:px-0">
+  <div class="filters w-full lg:w-1/4">
+    <h3 class="mb-3 text-xl uppercase">Buscar</h3>
+    <form method="get" action=".">
+      <div class="flex">
+        <input
+          type="text"
+          name="query"
+          class="p-4 bg-gray-100 border-0"
+          placeholder="Filtrar..."
+        />
+        <button class="p-4 bg-gray-100 border-0">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M9 9a2 2 0 114 0 2 2 0 01-4 0z" />
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a4 4 0 00-3.446 6.032l-2.261 2.26a1 1 0 101.414 1.415l2.261-2.261A4 4 0 1011 5z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <h3 class="mt-6 mb-3 text-xl uppercase">Categorías</h3>
+    <ul class="space-y-2">
+      <li><a href="{% url 'shop' %}" class="{% if not categoria_activa %}text-blue-500 font-bold{% else %}text-gray-500{% endif %}">Todas</a></li>
+      {% for categoria in categorias %}
+      <li><a href="{% url 'shop' %}?category={{ categoria.slug }}" class="{% if categoria.slug == categoria_activa %}text-blue-500 font-bold{% else %}text-gray-500{% endif %}">{{categoria.name}}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="cursos w-full lg:w-3/4 -mt-4 flex items-center flex-wrap">
+    {% for curso in cursos %}
+      {% include 'cursos/partials/cursos_lista_completa.html' %}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
