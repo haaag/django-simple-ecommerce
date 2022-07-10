@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.core.files import File
 
@@ -19,7 +20,9 @@ class Category(models.Model):
 class Cursos(models.Model):
     name = models.CharField(max_length=255)
     category = models.ForeignKey(
-        Category, related_name="cursos", on_delete=models.CASCADE
+        Category,
+        related_name="cursos",
+        on_delete=models.CASCADE,
     )
     slug = models.SlugField()
     description = models.TextField(blank=True, null=True)
@@ -36,11 +39,11 @@ class Cursos(models.Model):
 
     def make_thumbnail(self, image, size=(300, 300)):
         img = Image.open(image)
-        img.convert('RGB')
+        img.convert("RGB")
         img.thumbnail(size)
 
         thumb_io = BytesIO()
-        img.save(thumb_io, 'JPEG', quality=85)
+        img.save(thumb_io, "JPEG", quality=85)
 
         thumbnail = File(thumb_io, name=image.name)
 
@@ -57,3 +60,15 @@ class Cursos(models.Model):
                 return self.thumbnail.url
             else:
                 return "https://via.placeholder.com/240x240x.jpg"
+
+
+class Review(models.Model):
+    product = models.ForeignKey(
+        Cursos, related_name="reviews", on_delete=models.CASCADE
+    )
+    rating = models.IntegerField(default=3)
+    content = models.TextField()
+    created_by = models.ForeignKey(
+        User, related_name="reviews", on_delete=models.CASCADE
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
