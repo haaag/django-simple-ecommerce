@@ -10,8 +10,8 @@
   </div>
 
   <div class="information w-full lg:w-2/5 lg:p-6">
-    <h1 class="text-2xl">{{ curso.name }}</h1>
-
+    <h1 class="text-5xl">{{ curso.name }}</h1>
+    <h1 class="text-2xl text-gray-300">{{ curso.category }}</h1>
     <p class="mt-1 text-gray-400">ARS {{ curso.precio }}</p>
 
     {% if curso.get_rating > 0 %}
@@ -28,6 +28,12 @@
       hx-get="{% url 'add_to_cart' curso.id %}" hx-target="#menu-cart-button" hx-swap="outerHTML">
       Add to cart
     </a>
+    <button class="mt-6 inline-block px-8 py-4 rounded-xl bg-red-500 text-white hover:bg-red-700">
+      <a href="{% url 'delete-curso' curso.pk %}">Delete</a>
+    </button>
+    <button class="mt-6 inline-block px-8 py-4 rounded-xl bg-green-500 text-white hover:bg-green-700">
+      <a href="{% url 'edit-curso' curso.pk %}">Edit</a>
+    </button>
   </div>
 
   <div class="w-full mt-6">
@@ -68,26 +74,6 @@
       {{ review.content }}
     </div>
     {% endfor %}
-  </div>
-  <div class="w-full mt-6">
-    <div class="flex space-x-6">
-      <div class="w-1/2 mb-4">
-    <div>
-      <button class="mt-3 mb-3 p-6 bg-red-500 hover:bg-red-700 text-white rounded-xl">
-        <a href="{% url 'delete-curso' curso.pk %}">Borrar</a>
-      </button>
-    </div>
-      </div>
-
-      <div class="w-1/2 mb-4">
-    <div>
-      <button class="mt-3 mb-3 p-6 bg-blue-500 hover:bg-blue-700 text-white rounded-xl">
-        <a href="{% url 'edit-curso' curso.pk %}">Editar</a>
-      </button>
-      <h3 class="text-xl"></h3>
-    </div>
-      </div>
-    </div>
   </div>
 </div>
 {% endblock %}
