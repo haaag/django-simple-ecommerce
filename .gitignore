@@ -5,3 +5,8 @@ core/__pycache__
 core/migrations/__pycache__
 cursos/__pycache__
 cursos/migrations/__pycache__
+cursos/migrations
+node_modules
+package-lock.json
+package.json
+tailwind.config.js
