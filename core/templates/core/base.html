@@ -21,11 +21,11 @@
           <li><a href="{% url 'about' %}">Sobre mí</a></li>
 
           {% if request.user.is_authenticated %}
-          <div class="py-2 px-2 bg-red-500 rounded-xl hover:bg-red-700">
+          <div class="py-2 px-2 bg-red-500 rounded-xl transform transition-all hover:bg-red-700 hover:scale-105">
             <li><a href="{% url 'logout' %}" class="text-white font-bold">Log out</a></li>
           </div>
           {% else %}
-          <div class="py-2 px-2 bg-blue-500 rounded-xl hover:bg-blue-700">
+          <div class="py-2 px-2 bg-blue-500 rounded-xl transform transition-all hover:bg-blue-700 hover:scale-110">
             <li><a href="{% url 'login' %}" class="text-white font-bold">Login</a></li>
           </div>
           {% endif %}
