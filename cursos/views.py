@@ -1,12 +1,33 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import UpdateView
 
-from .models import Cursos
+from .models import Cursos, Review
 from .forms import CursoForm
 
 
 def curso(request, slug):
     curso = get_object_or_404(Cursos, slug=slug)
+
+    if request.method == "POST":
+        rating = request.POST.get("rating", 3)
+        content = request.POST.get("content", "")
+
+        if content:
+            reviews = Review.objects.filter(created_by=request.user, product=curso)
+
+            if reviews.count() > 0:
+                review = reviews.first()
+                review.rating = rating
+                review.content = content
+                review.save()
+            else:
+                review = Review.objects.create(
+                    product=curso,
+                    rating=rating,
+                    content=content,
+                    created_by=request.user,
+                )
+
+            return redirect("producto", slug=slug)
 
     return render(request, "cursos/curso.html", {"curso": curso})
 
@@ -40,8 +61,17 @@ def edit_curso(request, pk):
 
     return render(request, "cursos/curso-edit.html", {"form": form})
 
+
 def delete_curso(request, pk):
     curso = Cursos.objects.get(id=pk)
     curso.delete()
 
     return redirect("index")
+
+
+# def add_review(request):
+#     if request.method == "POST":
+#         form = ReviewForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect("/")

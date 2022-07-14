@@ -1,8 +1,11 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block title %}{{ curso.name }}{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'review-style.css' %}">
+<h1 class="bg-red-500">{{ static }}</h1>
 <div class="max-w-6xl mx-auto flex flex-wrap py-6 px-6 xl:px-0">
   <div class="images w-full mb-6 lg:mb-0 lg:w-3/5">
     <img class="rounded-xl"
@@ -24,20 +27,37 @@
     </p>
     {% endif %}
 
-    <a href="#" class="mt-6 inline-block px-8 py-4 rounded-xl bg-blue-500 text-white hover:bg-blue-700 transition-color duration-1000"
+    <a href="#" class="mt-6 inline-block px-8 py-4 rounded-xl bg-blue-500 text-white hover:bg-blue-700"
       hx-get="{% url 'add_to_cart' curso.id %}" hx-target="#menu-cart-button" hx-swap="outerHTML">
       Add to cart
     </a>
-    <button class="mt-6 inline-block px-8 py-4 rounded-xl bg-red-500 text-white hover:bg-red-700 transition-color duration-1000">
+    <button class="mt-6 inline-block px-8 py-4 rounded-xl bg-red-500 text-white hover:bg-red-700">
       <a href="{% url 'delete-curso' curso.pk %}">Delete</a>
     </button>
-    <button class="mt-6 inline-block px-8 py-4 rounded-xl bg-green-500 text-white hover:bg-green-700 transition-color duration-1000">
+    <button class="mt-6 inline-block px-8 py-4 rounded-xl bg-green-500 text-white hover:bg-green-700">
       <a href="{% url 'edit-curso' curso.pk %}">Edit</a>
     </button>
   </div>
 
   <div class="w-full mt-6">
-    <h2 class="mt-6 text-xl uppercase font-semibold">Calificar</h2>
+<div class="card bg-gray-100 p-20 rounded-xl">
+    <div class="review-section">
+      <div class="font-bold uppercase mb-6">Comentarios</div>
+      <div class="">
+
+    {% for review in curso.reviews.all %}
+    <div class="px-4 py-6 bg-gray-100 rounded-xl mb-4 border-solid bg-white border-2 border-black-100">
+      <strong>Calificación:</strong> {{ review.rating }}/6<br>
+      <strong>Fecha:</strong> {{ review.created_at|date:"Y-m-d" }}<br>
+      <strong>Comentario:</strong><br>
+      {{ review.content }}
+    </div>
+    {% endfor %}
+      </div>
+    </div>
+  </div>
+
+    {% if request.user.is_authenticated %}
     <form method="POST" action="" class="mt-6 mb-6 p-6 bg-gray-100 rounded-xl">
       {% csrf_token %}
 
@@ -53,31 +73,17 @@
         </select>
       </div>
 
-
       <div class="pt-6">
         <label class="font-bold">Comentario</label><br>
         <textarea name="content" class="mt-6 mb-6 p-6 bg-white-100 rounded-xl"></textarea>
       </div>
 
       <div>
-        {% if request.user.is_authenticated %}
-          <button class="mt-6 inline-block px-8 py-4 rounded-xl bg-blue-500 text-white hover:bg-blue-700 transition-color duration-1000">Calificar</button>
-        {% else %}
-
-        <a href="{% url 'login' %}" class="py-4 px-4 hover:bg-blue-500 hover:text-white rounded-xl transition-color duration-300">Para calificar, debes <b>Ingresar.</b></a>
-        {% endif %}
+        <button class="mt-6 inline-block px-8 py-4 rounded-xl bg-blue-500 text-white hover:bg-blue-700">Calificar</button>
       </div>
     </form>
+    {% endif %}
 
-    <h2 class="mt-6 mb-4 text-xl uppercase font-semibold">Comentarios</h2>
-    {% for review in curso.reviews.all %}
-    <div class="px-4 py-6 bg-gray-100 rounded-xl mb-4">
-      <strong>Calificación:</strong> {{ review.rating }}/6<br>
-      <strong>Fecha:</strong> {{ review.created_at|date:"Y-m-d" }}<br>
-      <strong>Comentario:</strong><br>
-      {{ review.content }}
-    </div>
-    {% endfor %}
   </div>
 </div>
 {% endblock %}

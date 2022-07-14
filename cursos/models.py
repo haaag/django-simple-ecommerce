@@ -72,3 +72,6 @@ class Review(models.Model):
         User, related_name="reviews", on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"product={self.product.name},rating={self.rating}"
