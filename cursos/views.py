@@ -5,7 +5,15 @@ from .forms import CursoForm
 
 
 def curso(request, slug):
+    MAX_RATING = 6
+
     curso = get_object_or_404(Cursos, slug=slug)
+
+    review_avg = round(
+        sum([rating.rating for rating in curso.reviews.all()])
+        // len(curso.reviews.all()),
+        2,
+    )
 
     if request.method == "POST":
         rating = request.POST.get("rating", 3)
@@ -29,7 +37,9 @@ def curso(request, slug):
 
             return redirect("producto", slug=slug)
 
-    return render(request, "cursos/curso.html", {"curso": curso})
+    return render(
+        request, "cursos/curso.html", {"curso": curso, "review_avg": review_avg}
+    )
 
 
 def curso_editar(request):
@@ -55,11 +65,11 @@ def edit_curso(request, pk):
         form = CursoForm(request.POST, instance=curso)
         if form.is_valid():
             form.save()
-            return redirect("index")
+            return redirect("producto", curso.slug)
     else:
         form = CursoForm(instance=curso)
 
-    return render(request, "cursos/curso-edit.html", {"form": form})
+    return render(request, "cursos/curso-edit.html", {"form": form, "curso": curso})
 
 
 def delete_curso(request, pk):
@@ -67,11 +77,3 @@ def delete_curso(request, pk):
     curso.delete()
 
     return redirect("index")
-
-
-# def add_review(request):
-#     if request.method == "POST":
-#         form = ReviewForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect("/")
