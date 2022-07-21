@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Cursos, Category, Review
+from .models import Cursos
 
 
 class CustomMMCF(forms.ModelChoiceField):
