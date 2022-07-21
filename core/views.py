@@ -2,7 +2,7 @@ from django.contrib.auth import login
 from django.db.models import Q
 from django.shortcuts import render, redirect
 
-from cursos.models import Cursos, Category, Review
+from cursos.models import Cursos, Category
 from .forms import SignUpForm
 
 # Create your views here.
