@@ -3,7 +3,7 @@
 
 Simple e-commerce realizado en [Django](https://www.djangoproject.com/) y [TailwindCss](https://tailwindcss.com/). Aproveché este proyecto para crear un template desde cero con la ayuda de `Tailwindcss`.
 
-<img align="center" width="499" height="361" src="https://github.com/haaag/coderhouse-python-final/blob/main/media/example.png?raw=true">
+<img align="center" width="600" height="400" src="https://github.com/haaag/django-simple-ecommerce/blob/main/media/screenshot.png?raw=true">
 
 ## Utilidades
 
