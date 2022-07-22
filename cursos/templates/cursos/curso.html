@@ -1,8 +1,10 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block title %}{{ curso.name }}{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'review-style.css' %}">
 <div class="max-w-6xl mx-auto flex flex-wrap py-6 px-6 xl:px-0">
   <div class="images w-full mb-6 lg:mb-0 lg:w-3/5">
     <img class="rounded-xl"
@@ -24,14 +26,17 @@
     </p>
     {% endif %}
 
-    <a href="#" class="mt-6 inline-block px-8 py-4 rounded-xl bg-blue-500 text-white hover:bg-blue-700 transition-color duration-1000"
+    <a href="#"
+      class="mt-6 inline-block px-8 py-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
       hx-get="{% url 'add_to_cart' curso.id %}" hx-target="#menu-cart-button" hx-swap="outerHTML">
       Add to cart
     </a>
-    <button class="mt-6 inline-block px-8 py-4 rounded-xl bg-red-500 text-white hover:bg-red-700 transition-color duration-1000">
+    <button
+      class="mt-6 inline-block px-8 py-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75">
       <a href="{% url 'delete-curso' curso.pk %}">Delete</a>
     </button>
-    <button class="mt-6 inline-block px-8 py-4 rounded-xl bg-green-500 text-white hover:bg-green-700 transition-color duration-1000">
+    <button
+      class="mt-6 inline-block px-8 py-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
       <a href="{% url 'edit-curso' curso.pk %}">Edit</a>
     </button>
   </div>
@@ -41,35 +46,73 @@
     <form method="POST" action="" class="mt-6 mb-6 p-6 bg-gray-100 rounded-xl">
       {% csrf_token %}
 
-      <div>
-        <label>Calificación</label><br>
-        <select name="rating">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3" selected>3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-        </select>
+      <div class="text-2xl flex justify-between mb-2">
+        <div class="justify-start">
+          <label class="text-xl flex-grow">Calificación</label><br>
+          <select name="rating"
+            class="block p-2 mt-5 mb-6 w-full text-sm text-gray-900 bg-white-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 ">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+        </div>
+
+
+        <div class="text-2xl justify-end mb-2">
+          <div class="average-rating-section font-medium text-sm p-4 bg-white text-center">
+            <div class="average-rating text-2xl flex justify-center items-center mb-2">
+              <svg class="star-icon w-10 h-10 my-6 mx-2 mt-2" viewBox="0 0 43 40" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path class="icon-path"
+                  d="M21.1363 1.42392C21.2826 1.11848 21.7174 1.11848 21.8637 1.42392L27.2274 12.6267C27.4958 13.1871 28.0288 13.5743 28.6447 13.6564L40.9566 15.2958C41.2923 15.3405 41.4267 15.754 41.1814 15.9875L32.1845 24.5506C31.7344 24.979 31.5308 25.6056 31.6431 26.2167L33.8885 38.4326C33.9497 38.7657 33.5979 39.0213 33.3001 38.8602L22.3759 32.9497C21.8294 32.654 21.1706 32.654 20.6241 32.9497L9.6999 38.8602C9.40205 39.0213 9.05025 38.7657 9.11147 38.4326L11.3569 26.2167C11.4692 25.6056 11.2656 24.979 10.8155 24.5506L1.81861 15.9875C1.57331 15.754 1.70768 15.3405 2.04336 15.2958L14.3553 13.6564C14.9712 13.5743 15.5042 13.1871 15.7726 12.6267L21.1363 1.42392Z"
+                  stroke-width="1.4375" />
+              </svg>
+              <div>
+              </div>
+              <div data-average-review>
+                {% if review_avg %}
+                  <h1 class="review-number font-bold text-4xl my-2">{{ review_avg }}</h1>
+                {% else %}
+                  <h1 class="review-number font-bold text-4xl my-2"></h1>
+                {% endif %}
+              </div>
+            </div>
+            Valoración Promedio
+          </div>
+        </div>
       </div>
 
 
-      <div class="pt-6">
-        <label class="font-bold">Comentario</label><br>
-        <textarea name="content" class="mt-6 mb-6 p-6 bg-white-100 rounded-xl"></textarea>
+      <div class="pt-4">
+        <textarea name="content"
+          class="block p-5 w-full text-sm text-white-900 bg-white-50 rounded-lg border border-white-300 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Tu comentario..."></textarea>
       </div>
 
       <div>
         {% if request.user.is_authenticated %}
-          <button class="mt-6 inline-block px-8 py-4 rounded-xl bg-blue-500 text-white hover:bg-blue-700 transition-color duration-1000">Calificar</button>
+        <button
+          class="mt-6 inline-block px-8 py-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">Calificar</button>
         {% else %}
 
-        <a href="{% url 'login' %}" class="py-4 px-4 hover:bg-blue-500 hover:text-white rounded-xl transition-color duration-300">Para calificar, debes <b>Ingresar.</b></a>
+        <div class="mt-6">
+          <a href="{% url 'login' %}"
+            class="py-4 px-4 hover:bg-blue-500 hover:text-white rounded-xl transition-color duration-300">Para
+            calificar,
+            debes <b>Ingresar.</b></a>
+        </div>
         {% endif %}
       </div>
     </form>
 
+    {% if review_avg %}
     <h2 class="mt-6 mb-4 text-xl uppercase font-semibold">Comentarios</h2>
+    <hr>
+
+    {% endif %}
     {% for review in curso.reviews.all %}
     <div class="px-4 py-6 bg-gray-100 rounded-xl mb-4">
       <strong>Calificación:</strong> {{ review.rating }}/6<br>
