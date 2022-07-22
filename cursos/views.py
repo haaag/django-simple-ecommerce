@@ -5,15 +5,12 @@ from .forms import CursoForm
 
 
 def curso(request, slug):
-    MAX_RATING = 6
+    review_avg = 0
 
     curso = get_object_or_404(Cursos, slug=slug)
 
-    review_avg = round(
-        sum([rating.rating for rating in curso.reviews.all()])
-        // len(curso.reviews.all()),
-        2,
-    )
+    if curso.reviews.all():
+        review_avg = round(sum([review.rating for review in curso.reviews.all()]) / len(curso.reviews.all()), 1)
 
     if request.method == "POST":
         rating = request.POST.get("rating", 3)
@@ -37,9 +34,7 @@ def curso(request, slug):
 
             return redirect("producto", slug=slug)
 
-    return render(
-        request, "cursos/curso.html", {"curso": curso, "review_avg": review_avg}
-    )
+    return render(request, "cursos/curso.html", {"curso": curso, "review_avg": review_avg})
 
 
 def curso_editar(request):
