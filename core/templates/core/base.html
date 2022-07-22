@@ -16,16 +16,16 @@
         <a href="{% url 'index' %}" class="py-4 text-lg text-blue-500 font-semibold uppercase">{Dev/s}</a>
 
         <ul class="flex items-center space-x-4">
-          <li><a href="{% url 'shop' %}">Cursos y Carreras</a></li>
+          <li><a href="{% url 'shop' %}">Cursos / Carreras</a></li>
           <li><a href="{% url 'crear-curso' %}">Agregar Cursos</a></li>
           <li><a href="{% url 'about' %}">Sobre mí</a></li>
 
           {% if request.user.is_authenticated %}
-          <div class="py-2 px-2 bg-red-500 rounded-xl transform transition-all hover:bg-red-700 hover:scale-105">
+          <div class="py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75">
             <li><a href="{% url 'logout' %}" class="text-white font-bold">Log out</a></li>
           </div>
           {% else %}
-          <div class="py-2 px-2 bg-blue-500 rounded-xl transform transition-all hover:bg-blue-700 hover:scale-110">
+          <div class="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
             <li><a href="{% url 'login' %}" class="text-white font-bold">Login</a></li>
           </div>
           {% endif %}
