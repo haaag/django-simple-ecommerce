@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 SESSION_COOKIE_AGE = 86400
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'core',
     'cursos',
     'carrito',
+    'livereload'
 ]
 
 MIDDLEWARE = [
